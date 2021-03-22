@@ -20,6 +20,8 @@ GEM
       ruby2_keywords (~> 0.0.1)
     nokogiri (1.11.2-x64-mingw32)
       racc (~> 1.4)
+    nokogiri (1.11.2-x86_64-darwin)
+      racc (~> 1.4)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -74,14 +76,16 @@ GEM
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
-    terminal-table (1.6.0)
+    terminal-table (3.0.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     tilt (2.0.10)
-    unicode-display_width (2.0.0)
+    unicode-display_width (1.7.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
 PLATFORMS
   x64-mingw32
+  x86_64-darwin-20
 
 DEPENDENCIES
   capybara
@@ -92,4 +96,4 @@ DEPENDENCIES
   sinatra
 
 BUNDLED WITH
-   2.2.14
+   2.2.15
