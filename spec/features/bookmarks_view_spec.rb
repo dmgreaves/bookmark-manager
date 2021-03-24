@@ -31,7 +31,7 @@ end
 
 feature 'Delete bookmarks' do
   scenario 'User can delete bookmarks' do
-    # Bookmark.add(url: 'www.apple.com', title: 'Apple')
+    # Bookmark.add(url: 'http://www.apple.com', title: 'Apple')
     con = PG.connect(dbname: 'bookmark_manager_test')
 
     visit('/bookmarks/new')
@@ -44,5 +44,24 @@ feature 'Delete bookmarks' do
 
     expect(current_path). to eq '/bookmarks'
     expect(page).not_to have_link('Apple', href: 'http://www.apple.com')
+  end
+end
+
+feature 'Update bookmarks' do
+  scenario "User can update a bookmark record" do
+    bookmark = Bookmark.add(url: 'http://www.moonpig.com', title: 'Moonpig')
+    visit('/bookmarks')
+    expect(page).to have_link('Moonpig', href: 'http://www.moonpig.com')
+
+    first('.bookmark').click_button 'Edit'
+    expect(current_path).to eq "/bookmarks/#{bookmark.id}/edit"
+
+    fill_in('url', with: "http://www.funkypigeon.com")
+    fill_in('title', with: "Funky Pigeon")
+    click_button('Submit')
+
+    expect(current_path).to eq '/bookmarks'
+    expect(page).not_to have_link('Moonpig', href: 'http://www.moonpig.com')
+    expect(page).to have_link('Funky Pigeon', href: 'http://www.funkypigeon.com')
   end
 end

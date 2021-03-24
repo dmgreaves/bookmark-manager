@@ -44,3 +44,15 @@ describe '.delete' do
     expect(Bookmark.all.length).to eq 0
   end
 end
+
+describe '.update' do
+  it 'updates a saved bookmark with new details' do
+    bookmark = Bookmark.add(url: 'http://www.moonpig.com', title: 'Moonpig')
+    updated_bookmark = Bookmark.update(id: bookmark.id, url: 'http://www.funkypigeon.com', title: 'Funky Pigeon')
+
+    expect(updated_bookmark).to be_a Bookmark
+    expect(updated_bookmark.id).to eq bookmark.id
+    expect(updated_bookmark.title).to eq 'Funky Pigeon'
+    expect(updated_bookmark.url).to eq 'http://www.funkypigeon.com'
+  end
+end
