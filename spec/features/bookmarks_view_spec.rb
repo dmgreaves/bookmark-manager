@@ -26,8 +26,15 @@ describe 'BookmarkManager' do
       click_button('Add Bookmark')
       expect(page).to have_link('Apple', href: 'http://www.apple.com')
     end
+    scenario 'Check the new bookmark is a valid URL' do
+      visit('/bookmarks/new')
+      fill_in('url', with: 'Not a real bookmark')
+      click_button('Add Bookmark')
+
+      expect(page).not_to have_content "Not a real bookmark"
+      expect(page).to have_content "You must submit a valid URL!"
+    end
   end
-end
 
 feature 'Delete bookmarks' do
   scenario 'User can delete bookmarks' do
@@ -64,4 +71,5 @@ feature 'Update bookmarks' do
     expect(page).not_to have_link('Moonpig', href: 'http://www.moonpig.com')
     expect(page).to have_link('Funky Pigeon', href: 'http://www.funkypigeon.com')
   end
+ end
 end
