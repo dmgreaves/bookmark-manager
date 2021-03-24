@@ -11,20 +11,12 @@ class Bookmark
   end
 
   def self.all
-    # @array = []
-      if ENV['ENVIRONMENT'] == 'test'
-        con = PG.connect :dbname => 'bookmark_manager_test'
-      else
-        con = PG.connect :dbname => 'bookmark_manager'
-      end
-
-    # rs = con.exec("SELECT * FROM bookmarks")
-    # rs.each do |row|
-    #   p row['url']
-    #   @array << row['url']
-    # end
-    # return @array
-    result = con.exec("SELECT * FROM bookmarks")
+      # if ENV['ENVIRONMENT'] == 'test'
+      #   con = PG.connect :dbname => 'bookmark_manager_test'
+      # else
+      #   con = PG.connect :dbname => 'bookmark_manager'
+      # end
+    result = DatabaseConnection.query("SELECT * FROM bookmarks")
     result.map do |bookmark|
       Bookmark.new(id: bookmark['id'], title: bookmark['title'], url: bookmark['url'])
     end
