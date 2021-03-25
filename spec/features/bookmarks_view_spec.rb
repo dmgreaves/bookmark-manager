@@ -72,4 +72,20 @@ feature 'Update bookmarks' do
     expect(page).to have_link('Funky Pigeon', href: 'http://www.funkypigeon.com')
   end
  end
+
+ feature 'Add comments to bookmarks' do
+   scenario 'a new comment is added to a bookmark' do
+     bookmark = Bookmark.add(url: 'http://www.moonpig.com', title: 'Moonpig')
+
+     visit('/bookmarks')
+     first('.bookmark').click_button 'Add Comment'
+     expect(current_path).to eq "/bookmarks/#{bookmark.id}/comments/new"
+
+     fill_in 'comment', with: 'This is a test comment on this bookmark'
+     click_button 'Submit'
+
+     expect(current_path).to eq '/bookmarks'
+     expect(first('.bookmark')).to have_content 'This is a test comment on this bookmark'
+   end
+ end
 end
